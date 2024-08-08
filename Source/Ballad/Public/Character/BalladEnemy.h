@@ -15,6 +15,7 @@ class BALLAD_API ABalladEnemy : public ABalladCharacterBase, public IEnemyInterf
 {
 	GENERATED_BODY()
 public:
+	ABalladEnemy();
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 };
