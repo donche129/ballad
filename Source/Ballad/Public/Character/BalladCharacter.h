@@ -13,5 +13,6 @@ UCLASS()
 class BALLAD_API ABalladCharacter : public ABalladCharacterBase
 {
 	GENERATED_BODY()
-	
+public:
+	ABalladCharacter();
 };
