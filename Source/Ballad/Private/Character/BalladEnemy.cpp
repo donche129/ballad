@@ -3,3 +3,10 @@
 
 #include "Character/BalladEnemy.h"
 
+void ABalladEnemy::HighlightActor()
+{
+}
+
+void ABalladEnemy::UnHighlightActor()
+{
+}

@@ -4,14 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Character/BalladCharacterBase.h"
+#include "Interaction/EnemyInterface.h"
 #include "BalladEnemy.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class BALLAD_API ABalladEnemy : public ABalladCharacterBase
+class BALLAD_API ABalladEnemy : public ABalladCharacterBase, public IEnemyInterface
 {
 	GENERATED_BODY()
-	
+public:
+	virtual void HighlightActor() override;
+	virtual void UnHighlightActor() override;
 };
