@@ -3,7 +3,9 @@
 
 #include "Character/BalladCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/BalladPlayerState.h"
 
 ABalladCharacter::ABalladCharacter()
 {
@@ -15,4 +17,29 @@ ABalladCharacter::ABalladCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+}
+
+void ABalladCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	// Init ability actor info for the server
+	InitAbilityActorInfo();
+}
+
+void ABalladCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
+
+	// Init ability actor info for the client
+	InitAbilityActorInfo();
+}
+
+void ABalladCharacter::InitAbilityActorInfo()
+{
+	ABalladPlayerState* BalladPlayerState = GetPlayerState<ABalladPlayerState>();
+	check(BalladPlayerState);
+	BalladPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(BalladPlayerState, this);
+	AbilitySystemComponent = BalladPlayerState->GetAbilitySystemComponent();
+	AttributeSet = BalladPlayerState->GetAttributeSet();
 }

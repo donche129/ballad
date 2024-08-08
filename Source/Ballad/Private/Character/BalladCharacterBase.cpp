@@ -23,3 +23,6 @@ void ABalladCharacterBase::BeginPlay()
 	
 }
 
+void ABalladCharacterBase::InitAbilityActorInfo()
+{
+}

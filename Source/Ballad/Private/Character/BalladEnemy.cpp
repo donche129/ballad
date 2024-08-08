@@ -32,3 +32,14 @@ void ABalladEnemy::UnHighlightActor()
 	GetMesh()->SetRenderCustomDepth(false);
 	Weapon->SetRenderCustomDepth(false);
 }
+
+void ABalladEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+	InitAbilityActorInfo();
+}
+
+void ABalladEnemy::InitAbilityActorInfo()
+{
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+}

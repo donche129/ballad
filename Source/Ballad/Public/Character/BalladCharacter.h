@@ -15,4 +15,8 @@ class BALLAD_API ABalladCharacter : public ABalladCharacterBase
 	GENERATED_BODY()
 public:
 	ABalladCharacter();
+	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
+private:
+	virtual void InitAbilityActorInfo() override;
 };
