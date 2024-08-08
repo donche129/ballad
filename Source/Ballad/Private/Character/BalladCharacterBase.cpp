@@ -12,6 +12,11 @@ ABalladCharacterBase::ABalladCharacterBase()
 	Weapon->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
+UAbilitySystemComponent* ABalladCharacterBase::GetAbilitySystemComponent() const
+{
+	return AbilitySystemComponent;
+}
+
 void ABalladCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();
