@@ -3,3 +3,10 @@
 
 #include "UI/WidgetController/BalladWidgetController.h"
 
+void UBalladWidgetController::SetWidgetControllerParams(const FWidgetControllerParams& WCParams)
+{
+	PlayerController = WCParams.PlayerController;
+	PlayerState = WCParams.PlayerState;
+	AbilitySystemComponent = WCParams.AbilitySystemComponent;
+	AttributeSet = WCParams.AttributeSet;
+}

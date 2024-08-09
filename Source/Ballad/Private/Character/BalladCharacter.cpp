@@ -5,7 +5,9 @@
 
 #include "AbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/BalladPlayerController.h"
 #include "Player/BalladPlayerState.h"
+#include "UI/HUD/BalladHUD.h"
 
 ABalladCharacter::ABalladCharacter()
 {
@@ -42,4 +44,12 @@ void ABalladCharacter::InitAbilityActorInfo()
 	BalladPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(BalladPlayerState, this);
 	AbilitySystemComponent = BalladPlayerState->GetAbilitySystemComponent();
 	AttributeSet = BalladPlayerState->GetAttributeSet();
+
+	if (ABalladPlayerController* BalladPlayerController = Cast<ABalladPlayerController>(GetController()))
+	{
+		if (ABalladHUD* BalladHUD = Cast<ABalladHUD>(BalladPlayerController->GetHUD()))
+		{
+			BalladHUD->InitOverlay(BalladPlayerController, BalladPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }
