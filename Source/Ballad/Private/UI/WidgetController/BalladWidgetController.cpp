@@ -10,3 +10,8 @@ void UBalladWidgetController::SetWidgetControllerParams(const FWidgetControllerP
 	AbilitySystemComponent = WCParams.AbilitySystemComponent;
 	AttributeSet = WCParams.AttributeSet;
 }
+
+void UBalladWidgetController::BroadcastInitialValues()
+{
+
+}

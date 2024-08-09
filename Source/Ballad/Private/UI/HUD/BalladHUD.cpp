@@ -30,6 +30,6 @@ void ABalladHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySy
 	UOverlayWidgetController* WidgetController = GetOverlayWidgetController(WidgetControllerParams);
 
 	OverlayWidget->SetWidgetController(WidgetController);
-
+	WidgetController->BroadcastInitialValues();
 	Widget->AddToViewport();
 }
