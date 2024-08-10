@@ -15,3 +15,8 @@ void UBalladWidgetController::BroadcastInitialValues()
 {
 
 }
+
+void UBalladWidgetController::BindCallbacksToDependencies()
+{
+
+}
