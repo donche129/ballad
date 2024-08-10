@@ -28,6 +28,7 @@ void ABalladEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AAc
 
 		UBalladAttributeSet* MutableBalladAttributeSet = const_cast<UBalladAttributeSet*>(BalladAttributeSet);
 		MutableBalladAttributeSet->SetHealth(BalladAttributeSet->GetHealth() + 25.f);
+		MutableBalladAttributeSet->SetMana(BalladAttributeSet->GetMana() - 25.f);
 		Destroy();
 	}
 }
