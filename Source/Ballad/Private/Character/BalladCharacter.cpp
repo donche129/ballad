@@ -4,6 +4,7 @@
 #include "Character/BalladCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Player/BalladPlayerController.h"
 #include "Player/BalladPlayerState.h"
@@ -42,6 +43,7 @@ void ABalladCharacter::InitAbilityActorInfo()
 	ABalladPlayerState* BalladPlayerState = GetPlayerState<ABalladPlayerState>();
 	check(BalladPlayerState);
 	BalladPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(BalladPlayerState, this);
+	Cast<UBalladAbilitySystemComponent>(BalladPlayerState->GetAbilitySystemComponent())->AbilityActorInfoSet();
 	AbilitySystemComponent = BalladPlayerState->GetAbilitySystemComponent();
 	AttributeSet = BalladPlayerState->GetAttributeSet();
 

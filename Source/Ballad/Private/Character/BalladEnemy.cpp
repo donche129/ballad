@@ -42,4 +42,5 @@ void ABalladEnemy::BeginPlay()
 void ABalladEnemy::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UBalladAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 }
