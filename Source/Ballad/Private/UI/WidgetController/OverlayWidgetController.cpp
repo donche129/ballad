@@ -14,6 +14,7 @@ void UOverlayWidgetController::BroadcastInitialValues()
 	OnMaxHealthChanged.Broadcast(BalladAttributeSet->GetMaxHealth());
 	OnManaChanged.Broadcast(BalladAttributeSet->GetMana());
 	OnMaxManaChanged.Broadcast(BalladAttributeSet->GetMaxMana());
+
 }
 
 void UOverlayWidgetController::BindCallbacksToDependencies()
@@ -21,16 +22,36 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	const UBalladAttributeSet* BalladAttributeSet = CastChecked<UBalladAttributeSet>(AttributeSet);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BalladAttributeSet->GetHealthAttribute()).AddUObject(this, &UOverlayWidgetController::HealthChanged);
+		BalladAttributeSet->GetHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BalladAttributeSet->GetMaxHealthAttribute()).AddUObject(this, &UOverlayWidgetController::MaxHealthChanged);
+		BalladAttributeSet->GetMaxHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnMaxHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BalladAttributeSet->GetManaAttribute()).AddUObject(this, &UOverlayWidgetController::ManaChanged);
+		BalladAttributeSet->GetManaAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnManaChanged.Broadcast(Data.NewValue);
+			}
+		);
 
 	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(
-		BalladAttributeSet->GetMaxManaAttribute()).AddUObject(this, &UOverlayWidgetController::MaxManaChanged);
+		BalladAttributeSet->GetMaxManaAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnMaxManaChanged.Broadcast(Data.NewValue);
+			}
+		);
 
 	Cast<UBalladAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
@@ -48,24 +69,4 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		}
 	);
-}
-
-void UOverlayWidgetController::HealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::MaxHealthChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxHealthChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::ManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnManaChanged.Broadcast(Data.NewValue);
-}
-
-void UOverlayWidgetController::MaxManaChanged(const FOnAttributeChangeData& Data) const
-{
-	OnMaxManaChanged.Broadcast(Data.NewValue);
 }
