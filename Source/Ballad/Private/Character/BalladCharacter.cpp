@@ -54,4 +54,5 @@ void ABalladCharacter::InitAbilityActorInfo()
 			BalladHUD->InitOverlay(BalladPlayerController, BalladPlayerState, AbilitySystemComponent, AttributeSet);
 		}
 	}
+	InitializePrimaryAttributes();
 }
