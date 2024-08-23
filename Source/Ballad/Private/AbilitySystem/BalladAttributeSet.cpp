@@ -20,15 +20,31 @@ void UBalladAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
+	// Primary Attributes
+
 	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Strength, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Intelligence, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Resilience, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Vigor, COND_None, REPNOTIFY_Always);
 
-	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	// Secondary Attributes
+
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Armor, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, ArmorPenetration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, BlockChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, CriticalHitChance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, CriticalHitDamage, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, CriticalHitResistance, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, HealthRegeneration, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, ManaRegeneration, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
-	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Mana, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, MaxMana, COND_None, REPNOTIFY_Always);
+
+	// Vital Attributes
+
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Health, COND_None, REPNOTIFY_Always);
+	DOREPLIFETIME_CONDITION_NOTIFY(UBalladAttributeSet, Mana, COND_None, REPNOTIFY_Always);
+	
 }
 
 void UBalladAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
@@ -100,19 +116,9 @@ void UBalladAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth) 
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, Health, OldHealth);
 }
 
-void UBalladAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, MaxHealth, OldMaxHealth);
-}
-
 void UBalladAttributeSet::OnRep_Mana(const FGameplayAttributeData& OldMana) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, Mana, OldMana);
-}
-
-void UBalladAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
-{
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, MaxMana, OldMaxMana);
 }
 
 void UBalladAttributeSet::OnRep_Strength(const FGameplayAttributeData& OldStrength) const
@@ -133,4 +139,54 @@ void UBalladAttributeSet::OnRep_Resilience(const FGameplayAttributeData& OldResi
 void UBalladAttributeSet::OnRep_Vigor(const FGameplayAttributeData& OldVigor) const
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, Vigor, OldVigor);
+}
+
+void UBalladAttributeSet::OnRep_Armor(const FGameplayAttributeData& OldArmor) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, Armor, OldArmor);
+}
+
+void UBalladAttributeSet::OnRep_ArmorPenetration(const FGameplayAttributeData& OldArmorPenetration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, ArmorPenetration, OldArmorPenetration);
+}
+
+void UBalladAttributeSet::OnRep_BlockChance(const FGameplayAttributeData& OldBlockChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, BlockChance, OldBlockChance);
+}
+
+void UBalladAttributeSet::OnRep_CriticalHitChance(const FGameplayAttributeData& OldCriticalHitChance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, CriticalHitChance, OldCriticalHitChance);
+}
+
+void UBalladAttributeSet::OnRep_CriticalHitDamage(const FGameplayAttributeData& OldCriticalHitDamage) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, CriticalHitDamage, OldCriticalHitDamage);
+}
+
+void UBalladAttributeSet::OnRep_CriticalHitResistance(const FGameplayAttributeData& OldCriticalHitResistance) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, CriticalHitResistance, OldCriticalHitResistance);
+}
+
+void UBalladAttributeSet::OnRep_HealthRegeneration(const FGameplayAttributeData& OldHealthRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, HealthRegeneration, OldHealthRegeneration);
+}
+
+void UBalladAttributeSet::OnRep_ManaRegeneration(const FGameplayAttributeData& OldManaRegeneration) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, ManaRegeneration, OldManaRegeneration);
+}
+
+void UBalladAttributeSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, MaxHealth, OldMaxHealth);
+}
+
+void UBalladAttributeSet::OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const
+{
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UBalladAttributeSet, MaxMana, OldMaxMana);
 }
