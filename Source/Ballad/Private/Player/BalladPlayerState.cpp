@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "AbilitySystem/BalladAttributeSet.h"
+#include "Net/UnrealNetwork.h"
 
 ABalladPlayerState::ABalladPlayerState()
 {
@@ -17,7 +18,19 @@ ABalladPlayerState::ABalladPlayerState()
 	NetUpdateFrequency = 100.f;
 }
 
+void ABalladPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(ABalladPlayerState, Level);
+}
+
 UAbilitySystemComponent* ABalladPlayerState::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
+}
+
+void ABalladPlayerState::OnRep_Level(int32 OldLevel)
+{
+
 }

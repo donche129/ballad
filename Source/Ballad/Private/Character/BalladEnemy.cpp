@@ -33,6 +33,11 @@ void ABalladEnemy::UnHighlightActor()
 	Weapon->SetRenderCustomDepth(false);
 }
 
+int32 ABalladEnemy::GetPlayerLevel()
+{
+	return Level;
+}
+
 void ABalladEnemy::BeginPlay()
 {
 	Super::BeginPlay();

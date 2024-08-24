@@ -38,6 +38,13 @@ void ABalladCharacter::OnRep_PlayerState()
 	InitAbilityActorInfo();
 }
 
+int32 ABalladCharacter::GetPlayerLevel()
+{
+	const ABalladPlayerState* BalladPlayerState = GetPlayerState<ABalladPlayerState>();
+	check(BalladPlayerState);
+	return BalladPlayerState->GetPlayerLevel();
+}
+
 void ABalladCharacter::InitAbilityActorInfo()
 {
 	ABalladPlayerState* BalladPlayerState = GetPlayerState<ABalladPlayerState>();
