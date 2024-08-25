@@ -10,8 +10,7 @@
 
 UBalladAttributeSet::UBalladAttributeSet()
 {
-	InitHealth(10.f);
-	InitMana(10.f);
+
 }
 
 void UBalladAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
