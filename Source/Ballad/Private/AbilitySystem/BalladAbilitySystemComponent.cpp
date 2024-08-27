@@ -9,14 +9,6 @@ void UBalladAbilitySystemComponent::AbilityActorInfoSet()
 {
 	OnGameplayEffectAppliedDelegateToSelf.AddUObject(this, &UBalladAbilitySystemComponent::EffectApplied);
 
-	const FBalladGameplayTags& GameplayTags = FBalladGameplayTags::Get();
-
-	GEngine->AddOnScreenDebugMessage(
-		-1,
-		10.f,
-		FColor::Orange,
-		FString::Printf(TEXT("Tag: %s"), *GameplayTags.Attributes_Secondary_Armor.ToString())
-	);
 }
 
 void UBalladAbilitySystemComponent::EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle)
