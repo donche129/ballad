@@ -9,7 +9,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class BALLAD_API UAttributeMenuWidgetController : public UBalladWidgetController
 {
 	GENERATED_BODY()

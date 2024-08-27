@@ -22,3 +22,19 @@ UOverlayWidgetController* UBalladAbilitySystemLibrary::GetOverlayWidgetControlle
 	}
 	return nullptr;
 }
+
+UAttributeMenuWidgetController* UBalladAbilitySystemLibrary::GetAttributeMenuWidgetController(const UObject* WorldContextObject)
+{
+	if (APlayerController* PC = UGameplayStatics::GetPlayerController(WorldContextObject, 0))
+	{
+		if (ABalladHUD* BalladHUD = Cast<ABalladHUD>(PC->GetHUD()))
+		{
+			ABalladPlayerState* PS = PC->GetPlayerState<ABalladPlayerState>();
+			UAbilitySystemComponent* ASC = PS->GetAbilitySystemComponent();
+			UAttributeSet* AS = PS->GetAttributeSet();
+			const FWidgetControllerParams WidgetControllerParams(PC, PS, ASC, AS);
+			return BalladHUD->GetAttributeMenuWidgetController(WidgetControllerParams);
+		}
+	}
+	return nullptr;
+}
