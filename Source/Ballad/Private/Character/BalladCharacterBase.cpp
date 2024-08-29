@@ -3,6 +3,7 @@
 
 #include "Character/BalladCharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/BalladAbilitySystemComponent.h"
 
 ABalladCharacterBase::ABalladCharacterBase()
 {
@@ -43,4 +44,12 @@ void ABalladCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultPrimaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.f);
+}
+
+void ABalladCharacterBase::AddCharacterAbilities()
+{
+	UBalladAbilitySystemComponent* BalladASC = CastChecked<UBalladAbilitySystemComponent>(AbilitySystemComponent);
+	if (!HasAuthority()) return;
+
+	BalladASC->AddCharacterAbilities(StartupAbilities);
 }
