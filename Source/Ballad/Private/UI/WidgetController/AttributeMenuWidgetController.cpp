@@ -5,23 +5,36 @@
 
 #include "AbilitySystem/BalladAttributeSet.h"
 #include "AbilitySystem/Data/AttributeInfo.h"
-#include "BalladGameplayTags.h"
 
 void UAttributeMenuWidgetController::BindCallbacksToDependencies()
 {
-
+	UBalladAttributeSet* AS = CastChecked<UBalladAttributeSet>(AttributeSet);
+	check(AttributeInfo);
+	for (auto& Pair : AS->TagsToAttributes)
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Value()).AddLambda(
+			[this, Pair](const FOnAttributeChangeData& Data)
+			{
+				BroadcastAttributeInfo(Pair.Key, Pair.Value());
+			}
+		);
+	}
 }
 
 void UAttributeMenuWidgetController::BroadcastInitialValues()
 {
 	UBalladAttributeSet* AS = CastChecked<UBalladAttributeSet>(AttributeSet);
-
 	check(AttributeInfo);
 
 	for (auto& Pair : AS->TagsToAttributes)
 	{
-		FBalladAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(Pair.Key);
-		Info.AttributeValue = Pair.Value().GetNumericValue(AS);
-		AttributeInfoDelegate.Broadcast(Info);
+		BroadcastAttributeInfo(Pair.Key, Pair.Value());
 	}
+}
+
+void UAttributeMenuWidgetController::BroadcastAttributeInfo(const FGameplayTag& AttributeTag, const FGameplayAttribute& Attribute) const
+{
+	FBalladAttributeInfo Info = AttributeInfo->FindAttributeInfoForTag(AttributeTag);
+	Info.AttributeValue = Attribute.GetNumericValue(AttributeSet);
+	AttributeInfoDelegate.Broadcast(Info);
 }
