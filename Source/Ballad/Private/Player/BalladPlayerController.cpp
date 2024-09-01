@@ -4,7 +4,7 @@
 #include "Player/BalladPlayerController.h"
 
 #include "EnhancedInputSubsystems.h"
-#include "EnhancedInputComponent.h"
+#include "Input/BalladInputComponent.h"
 #include "Interaction/EnemyInterface.h"
 
 ABalladPlayerController::ABalladPlayerController()
@@ -43,9 +43,9 @@ void ABalladPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 
-	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
-
-	EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABalladPlayerController::Move);
+	UBalladInputComponent* BalladInputComponent = CastChecked<UBalladInputComponent>(InputComponent);
+	BalladInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABalladPlayerController::Move);
+	BalladInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
 void ABalladPlayerController::Move(const FInputActionValue& InputActionValue)
@@ -120,4 +120,19 @@ void ABalladPlayerController::CursorTrace()
 			}
 		}
 	}
+}
+
+void ABalladPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, *InputTag.ToString());
+}
+
+void ABalladPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(2, 3.f, FColor::Blue, *InputTag.ToString());
+}
+
+void ABalladPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
+{
+	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, *InputTag.ToString());
 }
