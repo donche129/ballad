@@ -13,6 +13,7 @@ class UInputAction;
 struct FInputActionValue;
 class IEnemyInterface;
 class UBalladInputConfig;
+class UBalladAbilitySystemComponent;
 
 /**
  * 
@@ -46,4 +47,9 @@ private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	TObjectPtr<UBalladInputConfig> InputConfig;
+
+	UPROPERTY()
+	TObjectPtr<UBalladAbilitySystemComponent> BalladAbilitySystemComponent;
+
+	UBalladAbilitySystemComponent* GetASC();
 };

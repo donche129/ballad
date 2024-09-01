@@ -4,6 +4,7 @@
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
 
 #include "BalladGameplayTags.h"
+#include "AbilitySystem/Abilities/BalladGameplayAbility.h"
 
 void UBalladAbilitySystemComponent::AbilityActorInfoSet()
 {
@@ -13,11 +14,44 @@ void UBalladAbilitySystemComponent::AbilityActorInfoSet()
 
 void UBalladAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupAbilities)
 {
-	for (TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
+	for (const TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
-		//GiveAbility(AbilitySpec);
-		GiveAbilityAndActivateOnce(AbilitySpec);
+		if (const UBalladGameplayAbility* BalladAbility = Cast<UBalladGameplayAbility>(AbilitySpec.Ability))
+		{
+			AbilitySpec.DynamicAbilityTags.AddTag(BalladAbility->StartupInputTag);
+			GiveAbility(AbilitySpec);
+		}
+	}
+}
+
+void UBalladAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
+{
+	if (!InputTag.IsValid()) return;
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			AbilitySpecInputPressed(AbilitySpec);
+			if (!AbilitySpec.IsActive())
+			{
+				TryActivateAbility(AbilitySpec.Handle);
+			}
+		}
+	}
+}
+
+void UBalladAbilitySystemComponent::AbilityInputTagReleased(const FGameplayTag& InputTag)
+{
+	if (!InputTag.IsValid()) return;
+
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		if (AbilitySpec.DynamicAbilityTags.HasTagExact(InputTag))
+		{
+			AbilitySpecInputReleased(AbilitySpec);
+		}
 	}
 }
 

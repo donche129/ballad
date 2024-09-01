@@ -3,7 +3,9 @@
 
 #include "Player/BalladPlayerController.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
 #include "EnhancedInputSubsystems.h"
+#include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "Input/BalladInputComponent.h"
 #include "Interaction/EnemyInterface.h"
 
@@ -124,15 +126,26 @@ void ABalladPlayerController::CursorTrace()
 
 void ABalladPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, *InputTag.ToString());
+	//GEngine->AddOnScreenDebugMessage(1, 3.f, FColor::Red, *InputTag.ToString());
 }
 
 void ABalladPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(2, 3.f, FColor::Blue, *InputTag.ToString());
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagReleased(InputTag);
 }
 
 void ABalladPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
-	GEngine->AddOnScreenDebugMessage(3, 3.f, FColor::Green, *InputTag.ToString());
+	if (GetASC() == nullptr) return;
+	GetASC()->AbilityInputTagHeld(InputTag);
+}
+
+UBalladAbilitySystemComponent* ABalladPlayerController::GetASC()
+{
+	if (BalladAbilitySystemComponent == nullptr)
+	{
+		BalladAbilitySystemComponent = Cast<UBalladAbilitySystemComponent>(UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn<APawn>()));
+	}
+	return BalladAbilitySystemComponent;
 }
