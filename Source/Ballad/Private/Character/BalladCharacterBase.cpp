@@ -4,10 +4,14 @@
 #include "Character/BalladCharacterBase.h"
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
+#include "Components/CapsuleComponent.h"
 
 ABalladCharacterBase::ABalladCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
+	GetCapsuleComponent()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
+	GetMesh()->SetCollisionResponseToChannel(ECC_Camera, ECR_Ignore);
 
 	Weapon = CreateDefaultSubobject<USkeletalMeshComponent>("Weapon");
 	Weapon->SetupAttachment(GetMesh(), FName("WeaponHandSocket"));

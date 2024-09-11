@@ -69,6 +69,8 @@ void ABalladPlayerController::SetupInputComponent()
 
 	UBalladInputComponent* BalladInputComponent = CastChecked<UBalladInputComponent>(InputComponent);
 	BalladInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ABalladPlayerController::Move);
+	BalladInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &ABalladPlayerController::ShiftPressed);
+	BalladInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &ABalladPlayerController::ShiftReleased);
 	BalladInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
 }
 
@@ -119,12 +121,10 @@ void ABalladPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 		if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
 		return;
 	}
+	
+	if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
 
-	if (bTargeting)
-	{
-		if (GetASC()) GetASC()->AbilityInputTagReleased(InputTag);
-	}
-	else
+	if (!bTargeting && !bShiftKeyDown)
 	{
 		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime < ShortPressThreshold && ControlledPawn)
@@ -156,7 +156,7 @@ void ABalladPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 		return;
 	}
 
-	if (bTargeting)
+	if (bTargeting || bShiftKeyDown)
 	{
 		if (GetASC()) GetASC()->AbilityInputTagHeld(InputTag);
 	}
