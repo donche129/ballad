@@ -5,7 +5,9 @@
 
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "AbilitySystem/BalladAttributeSet.h"
+#include "Components/WidgetComponent.h"
 #include "Ballad/Ballad.h"
+#include "UI/Widget/BalladUserWidget.h"
 
 
 ABalladEnemy::ABalladEnemy()
@@ -17,6 +19,9 @@ ABalladEnemy::ABalladEnemy()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 
 	AttributeSet = CreateDefaultSubobject<UBalladAttributeSet>("AttributeSet");
+
+	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
+	HealthBar->SetupAttachment(GetRootComponent());
 }
 
 void ABalladEnemy::HighlightActor()
@@ -42,6 +47,30 @@ void ABalladEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	InitAbilityActorInfo();
+
+	if (UBalladUserWidget* BalladUserWidget = Cast<UBalladUserWidget>(HealthBar->GetUserWidgetObject()))
+	{
+		BalladUserWidget->SetWidgetController(this);
+	}
+	
+	if (const UBalladAttributeSet* BalladAS = CastChecked<UBalladAttributeSet>(AttributeSet))
+	{
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(BalladAS->GetHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
+		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(BalladAS->GetMaxHealthAttribute()).AddLambda(
+			[this](const FOnAttributeChangeData& Data)
+			{
+				OnMaxHealthChanged.Broadcast(Data.NewValue);
+			}
+		);
+
+		OnHealthChanged.Broadcast(BalladAS->GetHealth());
+		OnMaxHealthChanged.Broadcast(BalladAS->GetMaxHealth());
+	}
 }
 
 void ABalladEnemy::InitAbilityActorInfo()
