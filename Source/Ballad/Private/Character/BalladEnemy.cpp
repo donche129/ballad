@@ -61,7 +61,7 @@ void ABalladEnemy::BeginPlay()
 				/**
 				 * Changed this due to a bug where the enemy health bar widget remains at a value of zero
 				 * and is therefore not visible on the client side.
-				 * Somehow the value is not replicating to clients,
+				 * Somehow the value is not replicating to clients when using Data.NewValue.
 				 */
 				// OnHealthChanged.Broadcast(Data.NewValue);
 				OnHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
@@ -73,9 +73,9 @@ void ABalladEnemy::BeginPlay()
 				/**
 				 * Changed this due to a bug where the enemy health bar widget remains at a value of zero
 				 * and is therefore not visible on the client side.
-				 * Somehow the value is not replicating to clients.
+				 * Somehow the value is not replicating to clients when using Data.NewValue.
 				 */
-				//OnMaxHealthChanged.Broadcast(Data.NewValue);
+				// OnMaxHealthChanged.Broadcast(Data.NewValue);
 				OnMaxHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
 			}
 		);
