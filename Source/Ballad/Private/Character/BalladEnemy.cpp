@@ -4,6 +4,7 @@
 #include "Character/BalladEnemy.h"
 
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
+#include "AbilitySystem/BalladAbilitySystemLibrary.h"
 #include "AbilitySystem/BalladAttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "Ballad/Ballad.h"
@@ -91,4 +92,9 @@ void ABalladEnemy::InitAbilityActorInfo()
 	Cast<UBalladAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 
 	InitializeDefaultAttributes();
+}
+
+void ABalladEnemy::InitializeDefaultAttributes() const
+{
+	UBalladAbilitySystemLibrary::InitializeDefaultAttributes(this, CharacterClass, Level, AbilitySystemComponent);
 }

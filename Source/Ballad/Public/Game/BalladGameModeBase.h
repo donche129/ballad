@@ -6,6 +6,7 @@
 #include "GameFramework/GameModeBase.h"
 #include "BalladGameModeBase.generated.h"
 
+class UCharacterClassInfo;
 /**
  * 
  */
@@ -13,5 +14,7 @@ UCLASS()
 class BALLAD_API ABalladGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	UPROPERTY(EditDefaultsOnly, Category = "Character Class Defaults")
+	TObjectPtr<UCharacterClassInfo> CharacterClassInfo;
 };
