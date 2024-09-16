@@ -46,6 +46,12 @@ int32 ABalladEnemy::GetPlayerLevel()
 	return Level;
 }
 
+void ABalladEnemy::Die()
+{
+	SetLifeSpan(LifeSpan	);
+	Super::Die();
+}
+
 void ABalladEnemy::BeginPlay()
 {
 	Super::BeginPlay();
