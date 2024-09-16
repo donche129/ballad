@@ -27,6 +27,11 @@ UAbilitySystemComponent* ABalladCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+UAnimMontage* ABalladCharacterBase::GetHitReactMontage_Implementation()
+{
+	return HitReactMontage;
+}
+
 void ABalladCharacterBase::BeginPlay()
 {
 	Super::BeginPlay();

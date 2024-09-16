@@ -9,6 +9,8 @@
 #include "Components/WidgetComponent.h"
 #include "Ballad/Ballad.h"
 #include "UI/Widget/BalladUserWidget.h"
+#include "BalladGameplayTags.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 
 ABalladEnemy::ABalladEnemy()
@@ -47,6 +49,7 @@ int32 ABalladEnemy::GetPlayerLevel()
 void ABalladEnemy::BeginPlay()
 {
 	Super::BeginPlay();
+	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	InitAbilityActorInfo();
 
 	if (UBalladUserWidget* BalladUserWidget = Cast<UBalladUserWidget>(HealthBar->GetUserWidgetObject()))
@@ -80,10 +83,21 @@ void ABalladEnemy::BeginPlay()
 				OnMaxHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
 			}
 		);
+		
+		AbilitySystemComponent->RegisterGameplayTagEvent(FBalladGameplayTags::Get().Effects_HitReact, EGameplayTagEventType::NewOrRemoved).AddUObject(
+			this,
+			&ABalladEnemy::HitReactTagChanged
+		);
 
 		OnHealthChanged.Broadcast(BalladAS->GetHealth());
 		OnMaxHealthChanged.Broadcast(BalladAS->GetMaxHealth());
 	}
+}
+
+void ABalladEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
+{
+	bHitReacting = NewCount > 0;
+	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
 }
 
 void ABalladEnemy::InitAbilityActorInfo()
