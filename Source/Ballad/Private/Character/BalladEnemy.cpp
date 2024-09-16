@@ -51,6 +51,7 @@ void ABalladEnemy::BeginPlay()
 	Super::BeginPlay();
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	InitAbilityActorInfo();
+	UBalladAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
 
 	if (UBalladUserWidget* BalladUserWidget = Cast<UBalladUserWidget>(HealthBar->GetUserWidgetObject()))
 	{
