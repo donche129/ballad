@@ -70,8 +70,8 @@ public:
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes;
 
 	/*
-	* Primary Attributes
-	*/
+	 * Primary Attributes
+	 */
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes")
 	FGameplayAttributeData Strength;
@@ -90,8 +90,8 @@ public:
 	ATTRIBUTE_ACCESSORS(UBalladAttributeSet, Vigor)
 
 	/*
-	* Secondary Attributes
-	*/
+	 * Secondary Attributes
+	 */
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "Secondary Attributes")
 	FGameplayAttributeData Armor;
@@ -134,8 +134,8 @@ public:
 	ATTRIBUTE_ACCESSORS(UBalladAttributeSet, MaxMana)
 
 	/*
-	* Vital Attributes
-	*/
+	 * Vital Attributes
+	 */
 
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes")
 	FGameplayAttributeData Health;
@@ -144,6 +144,14 @@ public:
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UBalladAttributeSet, Mana)
+
+	/*
+	 * Meta Attributes
+	 */
+
+	UPROPERTY(BlueprintReadOnly, Category = "Meta Attributes")
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS(UBalladAttributeSet, IncomingDamage)
 
 	UFUNCTION()
 	void OnRep_Health(const FGameplayAttributeData& OldHealth) const;
