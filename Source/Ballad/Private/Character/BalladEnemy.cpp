@@ -69,25 +69,25 @@ void ABalladEnemy::BeginPlay()
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(BalladAS->GetHealthAttribute()).AddLambda(
 			[this, BalladAS](const FOnAttributeChangeData& Data)
 			{
+				OnHealthChanged.Broadcast(Data.NewValue);
 				/**
-				 * Changed this due to a bug where the enemy health bar widget remains at a value of zero
+				 * Below is a potential fix for a bug where the enemy health bar widget remains at a value of zero
 				 * and is therefore not visible on the client side.
 				 * Somehow the value is not replicating to clients when using Data.NewValue.
 				 */
-				// OnHealthChanged.Broadcast(Data.NewValue);
-				OnHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
+				// OnHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
 			}
 		);
 		AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(BalladAS->GetMaxHealthAttribute()).AddLambda(
 			[this, BalladAS](const FOnAttributeChangeData& Data)
 			{
+				OnMaxHealthChanged.Broadcast(Data.NewValue);
 				/**
-				 * Changed this due to a bug where the enemy health bar widget remains at a value of zero
+				 * Below is a potential fix for a bug where the enemy health bar widget remains at a value of zero
 				 * and is therefore not visible on the client side.
 				 * Somehow the value is not replicating to clients when using Data.NewValue.
 				 */
-				// OnMaxHealthChanged.Broadcast(Data.NewValue);
-				OnMaxHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
+				// OnMaxHealthChanged.Broadcast(Data.Attribute.GetNumericValue(BalladAS));
 			}
 		);
 		
