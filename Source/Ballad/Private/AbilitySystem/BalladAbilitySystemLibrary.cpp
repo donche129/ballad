@@ -43,12 +43,9 @@ UAttributeMenuWidgetController* UBalladAbilitySystemLibrary::GetAttributeMenuWid
 
 void UBalladAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent* ASC)
 {
-	ABalladGameModeBase* BalladGameMode = Cast<ABalladGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
-	if (BalladGameMode == nullptr) return;
-
 	AActor* AvatarActor = ASC->GetAvatarActor();
 	
-	UCharacterClassInfo* CharacterClassInfo = BalladGameMode->CharacterClassInfo;
+	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
 	FCharacterClassDefaultInfo ClassDefaultInfo = CharacterClassInfo->GetClassDefaultInfo(CharacterClass);
 
 	FGameplayEffectContextHandle PrimaryAttributesContextHandle = ASC->MakeEffectContext();
@@ -69,13 +66,17 @@ void UBalladAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* Wor
 
 void UBalladAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC)
 {
-	ABalladGameModeBase* BalladGameMode = Cast<ABalladGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
-	if (BalladGameMode == nullptr) return;
-
-	UCharacterClassInfo* CharacterClassInfo = BalladGameMode->CharacterClassInfo;
+	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
 	for (TSubclassOf<UGameplayAbility> AbilityClass : CharacterClassInfo->CommonAbilities)
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(AbilityClass, 1);
 		ASC->GiveAbility(AbilitySpec);
 	}
+}
+
+UCharacterClassInfo* UBalladAbilitySystemLibrary::GetCharacterClassInfo(const UObject* WorldContextObject)
+{
+	ABalladGameModeBase* BalladGameMode = Cast<ABalladGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
+	if (BalladGameMode == nullptr) return nullptr;
+	return BalladGameMode->CharacterClassInfo;
 }
