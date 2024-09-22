@@ -23,7 +23,7 @@ public:
 	}
 
 	/** Creates a copy of this context, used to duplicate for later modifications */
-	virtual FBalladGameplayEffectContext* Duplicate() const
+	virtual FBalladGameplayEffectContext* Duplicate() const override
 	{
 		FBalladGameplayEffectContext* NewContext = new FBalladGameplayEffectContext();
 		*NewContext = *this;
