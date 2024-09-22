@@ -3,6 +3,7 @@
 
 #include "AbilitySystem/BalladAbilitySystemLibrary.h"
 
+#include "BalladAbilityTypes.h"
 #include "Game/BalladGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/BalladPlayerState.h"
@@ -79,4 +80,40 @@ UCharacterClassInfo* UBalladAbilitySystemLibrary::GetCharacterClassInfo(const UO
 	ABalladGameModeBase* BalladGameMode = Cast<ABalladGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
 	if (BalladGameMode == nullptr) return nullptr;
 	return BalladGameMode->CharacterClassInfo;
+}
+
+bool UBalladAbilitySystemLibrary::IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle)
+{
+	if (const FBalladGameplayEffectContext* BalladEffectContext = static_cast<const FBalladGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return BalladEffectContext->IsBlockedHit();
+	}
+	return false;
+}
+
+bool UBalladAbilitySystemLibrary::IsCriticalHit(const FGameplayEffectContextHandle& EffectContextHandle)
+{
+	if (const FBalladGameplayEffectContext* BalladEffectContext = static_cast<const FBalladGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		return BalladEffectContext->IsCriticalHit();
+	}
+	return false;
+}
+
+void UBalladAbilitySystemLibrary::SetIsBlockedHit(FGameplayEffectContextHandle& EffectContextHandle,
+	bool bInIsBlockedHit)
+{
+	if (FBalladGameplayEffectContext* BalladEffectContext = static_cast<FBalladGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		BalladEffectContext->SetIsBlockedHit(bInIsBlockedHit);
+	}
+}
+
+void UBalladAbilitySystemLibrary::SetIsCriticalHit(FGameplayEffectContextHandle& EffectContextHandle,
+	bool bInIsCriticalHit)
+{
+	if (FBalladGameplayEffectContext* BalladEffectContext = static_cast<FBalladGameplayEffectContext*>(EffectContextHandle.Get()))
+	{
+		BalladEffectContext->SetIsCriticalHit(bInIsCriticalHit);
+	}
 }

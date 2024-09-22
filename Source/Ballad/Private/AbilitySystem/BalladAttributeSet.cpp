@@ -8,6 +8,7 @@
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
 #include "BalladGameplayTags.h"
+#include "AbilitySystem/BalladAbilitySystemLibrary.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/BalladPlayerController.h"
@@ -154,13 +155,15 @@ void UBalladAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 				TagContainer.AddTag(FBalladGameplayTags::Get().Effects_HitReact);
 				Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
 			}
-
-			ShowFloatingText(Props, LocalIncomingDamage);
+			
+			const bool bBlockedHit = UBalladAbilitySystemLibrary::IsBlockedHit(Props.EffectContextHandle);
+			const bool bCriticalHit = UBalladAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
+			ShowFloatingText(Props, LocalIncomingDamage, bBlockedHit, bCriticalHit);
 		}
 	}
 }
 
-void UBalladAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage) const
+void UBalladAttributeSet::ShowFloatingText(const FEffectProperties& Props, float Damage, bool bBlockedHit, bool bCriticalHit) const
 {
 	if (Props.SourceCharacter != Props.TargetCharacter)
 	{
