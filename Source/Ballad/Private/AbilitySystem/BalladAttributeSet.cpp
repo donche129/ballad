@@ -179,7 +179,7 @@ void UBalladAttributeSet::ShowFloatingText(const FEffectProperties& Props, float
 {
 	if (Props.SourceCharacter != Props.TargetCharacter)
 	{
-		if (ABalladPlayerController* PC = Cast<ABalladPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter, 0)))
+		if (ABalladPlayerController* PC = Cast<ABalladPlayerController>(Props.SourceCharacter->Controller))
 		{
 			PC->ShowDamageNumber(Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
