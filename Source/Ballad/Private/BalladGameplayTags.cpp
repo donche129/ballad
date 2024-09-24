@@ -45,26 +45,6 @@ void FBalladGameplayTags::InitializeNativeGameplayTags()
 		FString("Ignores Percentage of enemy Armor, increases Critical Hit Chance")
 	);
 
-	GameplayTags.Attributes_Secondary_BlockChance = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Secondary.BlockChance"),
-		FString("Chance to cut incoming damage in half")
-	);
-
-	GameplayTags.Attributes_Secondary_CriticalHitChance = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Secondary.CriticalHitChance"),
-		FString("Chance to double damage plus critical hit bonus")
-	);
-
-	GameplayTags.Attributes_Secondary_CriticalHitDamage = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Secondary.CriticalHitDamage"),
-		FString("Bonus damage added when a critical hit is scored")
-	);
-
-	GameplayTags.Attributes_Secondary_CriticalHitResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(
-		FName("Attributes.Secondary.CriticalHitResistance"),
-		FString("Reduces Critical Hit Chance of attacking enemies")
-	);
-
 	GameplayTags.Attributes_Secondary_HealthRegeneration = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.HealthRegeneration"),
 		FString("Amount of Health regenerated every 1 second")
@@ -83,6 +63,30 @@ void FBalladGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Attributes_Secondary_MaxMana = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Attributes.Secondary.MaxMana"),
 		FString("Maximum amount of Mana obtainable")
+	);
+
+	/*
+	 * Tertiary Attributes
+	 */
+
+	GameplayTags.Attributes_Tertiary_BlockChance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Tertiary.BlockChance"),
+		FString("Chance to cut incoming damage in half")
+	);
+
+	GameplayTags.Attributes_Tertiary_CriticalHitChance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Tertiary.CriticalHitChance"),
+		FString("Chance to double damage plus critical hit bonus")
+	);
+
+	GameplayTags.Attributes_Tertiary_CriticalHitDamage = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Tertiary.CriticalHitDamage"),
+		FString("Bonus damage added when a critical hit is scored")
+	);
+
+	GameplayTags.Attributes_Tertiary_CriticalHitResistance = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Attributes.Tertiary.CriticalHitResistance"),
+		FString("Reduces Critical Hit Chance of attacking enemies")
 	);
 
 	/*
