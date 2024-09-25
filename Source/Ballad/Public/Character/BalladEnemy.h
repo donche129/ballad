@@ -10,6 +10,8 @@
 #include "BalladEnemy.generated.h"
 
 class UWidgetComponent;
+class UBehaviorTree;
+class ABalladAIController;
 /**
  * 
  */
@@ -19,6 +21,7 @@ class BALLAD_API ABalladEnemy : public ABalladCharacterBase, public IEnemyInterf
 	GENERATED_BODY()
 public:
 	ABalladEnemy();
+	virtual void PossessedBy(AController* NewController) override;
 
 	/** Enemy Interface */
 	virtual void HighlightActor() override;
@@ -60,4 +63,10 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
+
+	UPROPERTY(EditAnywhere, Category = "AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
+
+	UPROPERTY()
+	TObjectPtr<ABalladAIController> BalladAIController;
 };

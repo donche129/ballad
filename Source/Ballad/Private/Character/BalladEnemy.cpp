@@ -10,6 +10,9 @@
 #include "Ballad/Ballad.h"
 #include "UI/Widget/BalladUserWidget.h"
 #include "BalladGameplayTags.h"
+#include "AI/BalladAIController.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 
@@ -25,6 +28,17 @@ ABalladEnemy::ABalladEnemy()
 
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetRootComponent());
+}
+
+void ABalladEnemy::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (!HasAuthority()) return;
+	BalladAIController = Cast<ABalladAIController>(NewController);
+
+	BalladAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+	BalladAIController->RunBehaviorTree(BehaviorTree);
 }
 
 void ABalladEnemy::HighlightActor()
