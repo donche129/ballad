@@ -45,6 +45,8 @@ void ABalladEnemy::PossessedBy(AController* NewController)
 
 	BalladAIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
 	BalladAIController->RunBehaviorTree(BehaviorTree);
+	BalladAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), false);
+	BalladAIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"), CharacterClass != ECharacterClass::Warrior);
 }
 
 void ABalladEnemy::HighlightActor()
@@ -128,6 +130,7 @@ void ABalladEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewC
 {
 	bHitReacting = NewCount > 0;
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0.f : BaseWalkSpeed;
+	BalladAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
 }
 
 void ABalladEnemy::InitAbilityActorInfo()
