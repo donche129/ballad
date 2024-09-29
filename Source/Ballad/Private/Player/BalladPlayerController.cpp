@@ -150,7 +150,7 @@ void ABalladPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				{
 					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
 				}
-				if (NavPath->PathPoints.Num() >0 )
+				if (NavPath->PathPoints.Num() >0)
 				{
 					CachedDestination = NavPath->PathPoints.Last();
 					bAutoRunning = true;
