@@ -81,7 +81,7 @@ void ABalladEnemy::BeginPlay()
 	InitAbilityActorInfo();
 	if (HasAuthority())
 	{
-		UBalladAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+		UBalladAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 	}
 
 	if (UBalladUserWidget* BalladUserWidget = Cast<UBalladUserWidget>(HealthBar->GetUserWidgetObject()))
