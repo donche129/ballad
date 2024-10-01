@@ -74,6 +74,16 @@ void ABalladEnemy::Die()
 	Super::Die();
 }
 
+void ABalladEnemy::SetCombatTarget_Implementation(AActor* InCombatTarget)
+{
+	CombatTarget = InCombatTarget;
+}
+
+AActor* ABalladEnemy::GetCombatTarget_Implementation() const
+{
+	return CombatTarget;
+}
+
 void ABalladEnemy::BeginPlay()
 {
 	Super::BeginPlay();
