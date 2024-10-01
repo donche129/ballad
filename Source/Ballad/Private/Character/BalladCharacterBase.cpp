@@ -51,6 +51,7 @@ void ABalladCharacterBase::MulticastHandleDeath_Implementation()
 	
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
+	bDead = true;
 }
 
 void ABalladCharacterBase::BeginPlay()
@@ -63,6 +64,16 @@ FVector ABalladCharacterBase::GetCombatSocketLocation_Implementation()
 {
 	check(Weapon);
 	return Weapon->GetSocketLocation(WeaponTipSocketName);
+}
+
+bool ABalladCharacterBase::IsDead_Implementation() const
+{
+	return bDead;
+}
+
+AActor* ABalladCharacterBase::GetAvatar_Implementation()
+{
+	return this;
 }
 
 void ABalladCharacterBase::InitAbilityActorInfo()
