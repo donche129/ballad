@@ -76,6 +76,11 @@ AActor* ABalladCharacterBase::GetAvatar_Implementation()
 	return this;
 }
 
+TArray<FTaggedMontage> ABalladCharacterBase::GetAttackMontages_Implementation()
+{
+	return AttackMontages;
+}
+
 void ABalladCharacterBase::InitAbilityActorInfo()
 {
 }
