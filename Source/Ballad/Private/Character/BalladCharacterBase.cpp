@@ -3,6 +3,7 @@
 
 #include "Character/BalladCharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "BalladGameplayTags.h"
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "Ballad/Ballad.h"
 #include "Components/CapsuleComponent.h"
@@ -60,10 +61,22 @@ void ABalladCharacterBase::BeginPlay()
 	
 }
 
-FVector ABalladCharacterBase::GetCombatSocketLocation_Implementation()
+FVector ABalladCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag)
 {
-	check(Weapon);
-	return Weapon->GetSocketLocation(WeaponTipSocketName);
+	const FBalladGameplayTags& GameplayTags = FBalladGameplayTags::Get();
+	if (MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_Weapon) && IsValid(Weapon))
+	{
+		return Weapon->GetSocketLocation(WeaponTipSocketName);
+	}
+	if (MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_LeftHand))
+	{
+		return GetMesh()->GetSocketLocation(LeftHandSocketName);
+	}
+	if (MontageTag.MatchesTagExact(GameplayTags.Montage_Attack_RightHand))
+	{
+		return GetMesh()->GetSocketLocation(RightHandSocketName);
+	}
+	return FVector();
 }
 
 bool ABalladCharacterBase::IsDead_Implementation() const
