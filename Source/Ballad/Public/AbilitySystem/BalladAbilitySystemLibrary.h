@@ -50,4 +50,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BalladAbilitySystemLibrary|GameplayMechanics")
 	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutOverlappingActors, const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& SphereOrigin);
+
+	UFUNCTION(BlueprintPure, Category = "BalladAbilitySystemLibrary|GameplayMechanics")
+	static bool IsNotFriend(AActor* FirstActor, AActor* SecondActor);
 };
