@@ -94,6 +94,11 @@ TArray<FTaggedMontage> ABalladCharacterBase::GetAttackMontages_Implementation()
 	return AttackMontages;
 }
 
+UNiagaraSystem* ABalladCharacterBase::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
+}
+
 void ABalladCharacterBase::InitAbilityActorInfo()
 {
 }
