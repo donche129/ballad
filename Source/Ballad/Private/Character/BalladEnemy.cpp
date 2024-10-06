@@ -70,7 +70,9 @@ int32 ABalladEnemy::GetPlayerLevel()
 
 void ABalladEnemy::Die()
 {
-	SetLifeSpan(LifeSpan	);
+	SetLifeSpan(LifeSpan);
+	if (BalladAIController) BalladAIController->GetBlackboardComponent()->SetValueAsBool(FName("Dead"), true);
+	
 	Super::Die();
 }
 
