@@ -7,6 +7,7 @@
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "Ballad/Ballad.h"
 #include "Components/CapsuleComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 ABalladCharacterBase::ABalladCharacterBase()
 {
@@ -41,6 +42,8 @@ void ABalladCharacterBase::Die()
 
 void ABalladCharacterBase::MulticastHandleDeath_Implementation()
 {
+	UGameplayStatics::PlaySoundAtLocation(this, DeathSound, GetActorLocation(), GetActorRotation());
+	
 	Weapon->SetSimulatePhysics(true);
 	Weapon->SetEnableGravity(true);
 	Weapon->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
