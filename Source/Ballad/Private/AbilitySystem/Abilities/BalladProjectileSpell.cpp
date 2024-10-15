@@ -19,14 +19,14 @@ void UBalladProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Ha
 	
 }
 
-void UBalladProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
+void UBalladProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation, const FGameplayTag& SocketTag)
 {
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
 
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
-		FBalladGameplayTags::Get().CombatSocket_Weapon);
+		SocketTag);
 	FRotator Rotation = (ProjectileTargetLocation - SocketLocation).Rotation();
 
 	FTransform SpawnTransform;
