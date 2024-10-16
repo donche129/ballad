@@ -118,6 +118,11 @@ FTaggedMontage ABalladCharacterBase::GetTaggedMontageByTag_Implementation(const 
 	return FTaggedMontage();
 }
 
+int32 ABalladCharacterBase::GetMinionCount_Implementation()
+{
+	return MinionCount;
+}
+
 void ABalladCharacterBase::InitAbilityActorInfo()
 {
 }
