@@ -3,6 +3,8 @@
 
 #include "AbilitySystem/Data/AttributeInfo.h"
 
+#include "Ballad/BalladLogChannels.h"
+
 FBalladAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag& AttributeTag, bool bLogNotFound) const
 {
 	for (const FBalladAttributeInfo& Info : AttributeInformation)
@@ -15,7 +17,7 @@ FBalladAttributeInfo UAttributeInfo::FindAttributeInfoForTag(const FGameplayTag&
 
 	if (bLogNotFound)
 	{
-		UE_LOG(LogTemp, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeInfo [%s]."), *AttributeTag.ToString(), *GetNameSafe(this));
+		UE_LOG(LogBallad, Error, TEXT("Can't find Info for AttributeTag [%s] on AttributeInfo [%s]."), *AttributeTag.ToString(), *GetNameSafe(this));
 	}
 
 	return FBalladAttributeInfo();
