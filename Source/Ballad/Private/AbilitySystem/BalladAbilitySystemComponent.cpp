@@ -23,6 +23,8 @@ void UBalladAbilitySystemComponent::AddCharacterAbilities(const TArray<TSubclass
 			GiveAbility(AbilitySpec);
 		}
 	}
+	bStartupAbilitiesGiven = true;
+	AbilitiesGivenDelegate.Broadcast(this);
 }
 
 void UBalladAbilitySystemComponent::AbilityInputTagHeld(const FGameplayTag& InputTag)
