@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/BalladAbilitySystemComponent.h"
 #include "AbilitySystem/BalladAttributeSet.h"
+#include "AbilitySystem/Data/AbilityInfo.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -88,5 +89,13 @@ void UOverlayWidgetController::OnInitializeStartupAbilities(UBalladAbilitySystem
 	// TODO: Get information about all given abilities, look up their Ability Info, and broadcast it to widgets.
 	if (!BalladAbilitySystemComponent->bStartupAbilitiesGiven) return;
 
-	
+	FForEachAbility BroadcastDelegate;
+	BroadcastDelegate.BindLambda([this](const FGameplayAbilitySpec& AbilitySpec)
+	{
+		// TODO: need a way to figure out the ability tag for a given ability spec.
+		FBalladAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag(UBalladAbilitySystemComponent::GetAbilityTagFromSpec(AbilitySpec));
+		Info.InputTag = UBalladAbilitySystemComponent::GetInputTagFromSpec(AbilitySpec);
+		AbilityInfoDelegate.Broadcast(Info);
+	});
+	BalladAbilitySystemComponent->ForEachAbility(BroadcastDelegate);
 }
