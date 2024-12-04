@@ -35,9 +35,10 @@ void UWaitCooldownChange::EndTask()
 {
 	if (!IsValid(ASC)) return;
 	ASC->RegisterGameplayTagEvent(CooldownTag, EGameplayTagEventType::NewOrRemoved).RemoveAll(this);
+	ASC->OnActiveGameplayEffectAddedDelegateToSelf.RemoveAll(this);
 
 	SetReadyToDestroy();
-	MarkAsGarbage();
+	MarkAsGarbage(); // This may not be necessary as SetReadyToDestroy already marks the object as garbage
 }
 
 void UWaitCooldownChange::CooldownTagChanged(const FGameplayTag InCooldownTag, int32 NewCount)
