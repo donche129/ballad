@@ -53,6 +53,10 @@ void UWaitCooldownChange::CooldownTagChanged(const FGameplayTag InCooldownTag, i
 void UWaitCooldownChange::OnActiveEffectAdded(UAbilitySystemComponent* TargetASC,
 	const FGameplayEffectSpec& SpecApplied, FActiveGameplayEffectHandle ActiveEffectHandle)
 {
+	// Prevents delegate from being broadcast twice on the client during replication
+	const bool bIsReplicatedEffect = !SpecApplied.GetContext().GetAbilityInstance_NotReplicated();
+	if (bIsReplicatedEffect) return;
+	
 	FGameplayTagContainer AssetTags;
 	SpecApplied.GetAllAssetTags(AssetTags);
 
