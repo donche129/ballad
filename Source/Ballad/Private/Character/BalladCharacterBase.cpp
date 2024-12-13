@@ -161,6 +161,7 @@ void ABalladCharacterBase::AddCharacterAbilities()
 	if (!HasAuthority()) return;
 
 	BalladASC->AddCharacterAbilities(StartupAbilities);
+	BalladASC->AddCharacterPassiveAbilities(StartupPassiveAbilities);
 }
 
 void ABalladCharacterBase::Dissolve()
