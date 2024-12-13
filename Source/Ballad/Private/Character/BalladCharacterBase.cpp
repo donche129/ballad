@@ -128,6 +128,11 @@ void ABalladCharacterBase::IncrementMinionCount_Implementation(int32 Amount)
 	MinionCount += Amount;
 }
 
+ECharacterClass ABalladCharacterBase::GetCharacterClass_Implementation()
+{
+	return CharacterClass;
+}
+
 void ABalladCharacterBase::InitAbilityActorInfo()
 {
 }

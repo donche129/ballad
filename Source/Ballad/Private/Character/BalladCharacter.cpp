@@ -20,6 +20,8 @@ ABalladCharacter::ABalladCharacter()
 	bUseControllerRotationPitch = false;
 	bUseControllerRotationRoll = false;
 	bUseControllerRotationYaw = false;
+
+	CharacterClass = ECharacterClass::Elementalist;
 }
 
 void ABalladCharacter::PossessedBy(AController* NewController)
