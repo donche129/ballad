@@ -9,6 +9,7 @@
 #include "Net/UnrealNetwork.h"
 #include "BalladGameplayTags.h"
 #include "AbilitySystem/BalladAbilitySystemLibrary.h"
+#include "Ballad/BalladLogChannels.h"
 #include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/BalladPlayerController.h"
@@ -142,7 +143,6 @@ void UBalladAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
 	{
 		SetHealth(FMath::Clamp(GetHealth(), 0.f, GetMaxHealth()));
-		UE_LOG(LogTemp, Warning, TEXT("Changed Health on %s, Health: %f"), *Props.TargetAvatarActor->GetName(), GetHealth());
 	}
 	if (Data.EvaluatedData.Attribute == GetManaAttribute())
 	{
@@ -177,6 +177,12 @@ void UBalladAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCall
 			const bool bCriticalHit = UBalladAbilitySystemLibrary::IsCriticalHit(Props.EffectContextHandle);
 			ShowFloatingText(Props, LocalIncomingDamage, bBlockedHit, bCriticalHit);
 		}
+	}
+	if (Data.EvaluatedData.Attribute == GetIncomingXPAttribute())
+	{
+		const float LocalIncomingXP = GetIncomingXP();
+		SetIncomingXP(0.f);
+		UE_LOG(LogBallad, Log, TEXT("Incoming XP: %f"), LocalIncomingXP);
 	}
 }
 
